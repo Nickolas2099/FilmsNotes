@@ -1,18 +1,22 @@
 package com.example.filmsNotes.controller;
 
+import com.example.filmsNotes.domain.api.ShowReq;
 import com.example.filmsNotes.domain.entity.Show;
 import com.example.filmsNotes.domain.response.Response;
 import com.example.filmsNotes.service.ShowService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/films-notes")
+@RequestMapping(value = "/films-notes")
+@RequiredArgsConstructor
 public class ShowController {
 
-    ShowService showService;
+    private final ShowService showService;
     @GetMapping("/getShows")
     public ResponseEntity<Response> getShows() {
         log.info("START endpoint getShows");
@@ -30,9 +34,9 @@ public class ShowController {
     }
 
     @PostMapping("/addShow")
-    public ResponseEntity<Response> addShow(@RequestBody Show show) {
-        log.info("START endpoint addShow, show: {}", show);
-        ResponseEntity<Response> resp = showService.addShow(show);
+    public ResponseEntity<Response> addShow(@RequestBody final ShowReq req) {
+        log.info("START endpoint addShow, req: {}", req);
+        ResponseEntity<Response> resp = showService.addShow(req);
         log.info("END endpoint addShow, resp: {}", resp);
         return resp;
     }
@@ -46,9 +50,9 @@ public class ShowController {
     }
 
     @PatchMapping("/updateShow")
-    public ResponseEntity<Response> updateShow(@RequestBody Show show) {
-        log.info("START endpoint updateShow, show: {}", show);
-        ResponseEntity<Response> resp = showService.updateShow(show);
+    public ResponseEntity<Response> updateShow(@RequestBody final ShowReq req) {
+        log.info("START endpoint updateShow, req: {}", req);
+        ResponseEntity<Response> resp = showService.updateShow(req);
         log.info("END endpoint updateShow, resp: {}", resp);
         return resp;
     }
