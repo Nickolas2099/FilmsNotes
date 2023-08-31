@@ -1,12 +1,10 @@
 package com.example.filmsNotes.controller;
 
 import com.example.filmsNotes.domain.api.ShowReq;
-import com.example.filmsNotes.domain.entity.Show;
 import com.example.filmsNotes.domain.response.Response;
 import com.example.filmsNotes.service.ShowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping(value = "/films-notes")
 @RequiredArgsConstructor
-public class ShowController {
+public class CommonController {
 
     private final ShowService showService;
     @GetMapping("/getShows")

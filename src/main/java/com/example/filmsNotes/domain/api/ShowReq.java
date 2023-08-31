@@ -21,6 +21,6 @@ public class ShowReq {
     private Show show;
     @NotNull(message = "genres не должен быть пустым")
     @Size(max = 5, message = "должно быть не больше 5 жанров")
-    private Set<Genre> genres;
+    private Set<String> genres;
 
 }

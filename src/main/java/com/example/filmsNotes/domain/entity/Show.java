@@ -2,20 +2,25 @@ package com.example.filmsNotes.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.IdGeneratorType;
 
 import java.util.Set;
 
 @Entity
-@Table(name = "show")
+@Table(name = "\"show\"")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Show {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "title не должен быть пустым")
     private String title;
