@@ -1,5 +1,6 @@
 package com.example.filmsNotes.service;
 
+import com.example.filmsNotes.domain.api.SearchShowByNamePartReq;
 import com.example.filmsNotes.domain.constant.Code;
 import com.example.filmsNotes.domain.entity.Show;
 import com.example.filmsNotes.domain.response.Response;
@@ -25,8 +26,8 @@ public class SearchServiceImpl implements SearchService{
     private final ShowRepository showRepository;
     private final Validation validation;
     @Override
-    public ResponseEntity<Response> searchShowsByNamePart(String namePart) {
-        namePart = namePart.trim();
+    public ResponseEntity<Response> searchShowsByNamePart(SearchShowByNamePartReq req) {
+        String namePart = req.getNamePart().trim();
         if(namePart.equals("")) {
             return new ResponseEntity<>(ErrorResponse.builder().error(Error.builder().code(Code.EMPTY_REQUEST)
                     .techMessage("namePart должен быть заполнен").build()).build(), HttpStatus.BAD_REQUEST);

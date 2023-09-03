@@ -1,5 +1,6 @@
 package com.example.filmsNotes.controller;
 
+import com.example.filmsNotes.domain.api.SearchShowByNamePartReq;
 import com.example.filmsNotes.domain.response.Response;
 import com.example.filmsNotes.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +20,10 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/searchShowsByNamePart")
-    public ResponseEntity<Response> searchShowsByNamePart(@RequestBody String namePart) {
+    public ResponseEntity<Response> searchShowsByNamePart(@RequestBody SearchShowByNamePartReq req) {
 
-        log.info("START endpoint searchShowByNamePart, partName: {}", namePart);
-        ResponseEntity<Response> resp = searchService.searchShowsByNamePart(namePart);
+        log.info("START endpoint searchShowByNamePart, req: {}", req);
+        ResponseEntity<Response> resp = searchService.searchShowsByNamePart(req);
         log.info("END endpoint searchShowByNamePart, resp: {}", resp);
         return resp;
     }
