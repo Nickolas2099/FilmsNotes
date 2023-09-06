@@ -1,4 +1,4 @@
-package com.example.filmsNotes.service;
+package com.example.filmsNotes.service.show;
 
 import com.example.filmsNotes.domain.api.ShowReq;
 import com.example.filmsNotes.domain.entity.Genre;
@@ -13,9 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -29,26 +28,33 @@ public class ShowServiceImpl implements ShowService {
 
 
     @Override
-    public ResponseEntity<Response> getShows() {
-        List<Show> shows = showRepository.findAll();
-        return new ResponseEntity<>(SuccessResponse.builder().data(shows).build(), HttpStatus.OK);
+    public ResponseEntity<Response> getShowsWithGenres() {
+
+        List<Show> shows = showRepository.findAllByOrderByGradeDesc();
+        return new ResponseEntity<>(SuccessResponse.builder()
+                .data(shows)
+                .build(), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Response> getShow(long showId) {
         validation.validationDecimalMin("showId", showId, 1);
+
         return new ResponseEntity<>(SuccessResponse.builder().data(showRepository.findById(showId)).build(), HttpStatus.OK);
     }
 
-    @Transactional
     @Override
     public ResponseEntity<Response> addShow(ShowReq req) {
         validation.requestValidation(req);
-        List<Genre> genres = new ArrayList<>();
-        for(String genre : req.getGenres()) {
-            genres.add(Genre.builder().name(genre).build());
+
+        Iterator<Genre> iterator = req.getShow().getGenres().iterator();
+
+        while (iterator.hasNext()){
+            Genre genre = iterator.next();
+            if(genreRepository.isGenreExist(genre.getName()) == 1) {
+                iterator.remove();
+            }
         }
-        genreRepository.saveAllAndFlush(genres);
         showRepository.saveAndFlush(req.getShow());
         return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
     }
@@ -56,6 +62,7 @@ public class ShowServiceImpl implements ShowService {
     @Override
     public ResponseEntity<Response> deleteShow(long showId) {
         validation.validationDecimalMin("showId", showId, 1);
+
         showRepository.deleteById(showId);
         return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
     }
@@ -63,6 +70,7 @@ public class ShowServiceImpl implements ShowService {
     @Override
     public ResponseEntity<Response> updateShow(ShowReq req) {
         validation.requestValidation(req);
+
         showRepository.saveAndFlush(req.getShow());
         return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
     }

@@ -1,4 +1,4 @@
-package com.example.filmsNotes.service;
+package com.example.filmsNotes.service.search;
 
 import com.example.filmsNotes.domain.api.SearchShowByNamePartReq;
 import com.example.filmsNotes.domain.entity.Show;

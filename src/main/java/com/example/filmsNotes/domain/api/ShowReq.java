@@ -2,6 +2,8 @@ package com.example.filmsNotes.domain.api;
 
 import com.example.filmsNotes.domain.entity.Genre;
 import com.example.filmsNotes.domain.entity.Show;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -19,8 +21,5 @@ public class ShowReq {
 
     @NotNull(message = "show не должен быть пустым")
     private Show show;
-    @NotNull(message = "genres не должен быть пустым")
-    @Size(max = 5, message = "должно быть не больше 5 жанров")
-    private Set<String> genres;
 
 }

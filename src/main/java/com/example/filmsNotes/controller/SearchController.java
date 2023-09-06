@@ -2,7 +2,7 @@ package com.example.filmsNotes.controller;
 
 import com.example.filmsNotes.domain.api.SearchShowByNamePartReq;
 import com.example.filmsNotes.domain.response.Response;
-import com.example.filmsNotes.service.SearchService;
+import com.example.filmsNotes.service.search.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

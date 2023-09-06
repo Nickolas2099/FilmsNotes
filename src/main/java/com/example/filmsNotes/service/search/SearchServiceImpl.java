@@ -1,4 +1,4 @@
-package com.example.filmsNotes.service;
+package com.example.filmsNotes.service.search;
 
 import com.example.filmsNotes.domain.api.SearchShowByNamePartReq;
 import com.example.filmsNotes.domain.constant.Code;
@@ -7,9 +7,9 @@ import com.example.filmsNotes.domain.response.Response;
 import com.example.filmsNotes.domain.response.SuccessResponse;
 import com.example.filmsNotes.domain.response.error.Error;
 import com.example.filmsNotes.domain.response.error.ErrorResponse;
-import com.example.filmsNotes.domain.response.exception.CustomException;
 import com.example.filmsNotes.domain.utils.Validation;
 import com.example.filmsNotes.repository.ShowRepository;
+import com.example.filmsNotes.service.search.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class SearchServiceImpl implements SearchService{
+public class SearchServiceImpl implements SearchService {
 
     private final ShowRepository showRepository;
     private final Validation validation;

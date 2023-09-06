@@ -1,22 +1,25 @@
 package com.example.filmsNotes.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.IdGeneratorType;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "\"show\"")
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
 public class Show {
 
     @Id
@@ -28,12 +31,13 @@ public class Show {
     private float grade;
     @NotNull(message = "year не должен быть пустым")
     private int year;
-//    @NotNull(message = "genres не должен быть пустым")
-//    @ManyToMany
-//    @JoinTable(
-//            name = "show_genre",
-//            joinColumns = @JoinColumn(name = "show_id"),
-//            inverseJoinColumns = @JoinColumn(name = "genre_id")
-//    )
-//    private Set<Genre> genres;
+
+    @Size(max = 3, message = "show должен содержать не больше 3 жанров")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "show_genre",
+            joinColumns = @JoinColumn(name = "show_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres;
 }

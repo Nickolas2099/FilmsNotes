@@ -2,7 +2,7 @@ package com.example.filmsNotes.controller;
 
 import com.example.filmsNotes.domain.api.ShowReq;
 import com.example.filmsNotes.domain.response.Response;
-import com.example.filmsNotes.service.ShowService;
+import com.example.filmsNotes.service.show.ShowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping(value = "/films-notes")
+@RequestMapping(value = "/films-notes/show")
 @RequiredArgsConstructor
 public class CommonController {
 
@@ -18,7 +18,7 @@ public class CommonController {
     @GetMapping("/getShows")
     public ResponseEntity<Response> getShows() {
         log.info("START endpoint getShows");
-        ResponseEntity<Response> resp = showService.getShows();
+        ResponseEntity<Response> resp = showService.getShowsWithGenres();
         log.info("END endpoint getShows, resp: {}", resp);
         return resp;
     }
@@ -47,9 +47,10 @@ public class CommonController {
         return resp;
     }
 
-    @PatchMapping("/updateShow")
-    public ResponseEntity<Response> updateShow(@RequestBody final ShowReq req) {
-        log.info("START endpoint updateShow, req: {}", req);
+    @PatchMapping("/updateShow/{id}")
+    public ResponseEntity<Response> updateShow(@PathVariable("id") Long id, @RequestBody final ShowReq req) {
+        log.info("START endpoint updateShow, id: {}, req: {}", id, req);
+        req.getShow().setId(id);
         ResponseEntity<Response> resp = showService.updateShow(req);
         log.info("END endpoint updateShow, resp: {}", resp);
         return resp;
