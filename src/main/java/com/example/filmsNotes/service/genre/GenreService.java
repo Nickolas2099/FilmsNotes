@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface GenreService {
 
+    ResponseEntity<Response> getGenres();
     ResponseEntity<Response> deleteGenre(Long genreId);
     ResponseEntity<Response> updateGenre(GenreReq genre);
 }

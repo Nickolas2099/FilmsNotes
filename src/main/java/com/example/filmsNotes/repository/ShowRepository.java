@@ -1,5 +1,6 @@
 package com.example.filmsNotes.repository;
 
+import com.example.filmsNotes.domain.entity.Genre;
 import com.example.filmsNotes.domain.entity.Show;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,8 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
 
     List<Show> findAllByOrderByGradeDesc();
 
+    List<Show> findByGenresId(Long genreId);
+
+    @Query(value = "SELECT * FROM `show` s WHERE s.grade >= ?", nativeQuery = true)
+    List<Show> searchShowsByMinGrade(float minGrade);
 }

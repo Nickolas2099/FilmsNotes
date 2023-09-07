@@ -47,4 +47,13 @@ public class Validation {
         }
     }
 
+    public void validationDecimalMin(String fieldName, float fieldValue, float constraint) {
+        if(fieldValue < constraint) {
+            throw CustomException.builder().code(Code.REQUEST_VALIDATION_ERROR)
+                    .userMessage(fieldName + " должен быть больше или равен " + constraint)
+                    .httpStatus(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+
 }

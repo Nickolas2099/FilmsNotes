@@ -5,7 +5,7 @@ import com.example.filmsNotes.domain.response.Response;
 import org.springframework.http.ResponseEntity;
 
 public interface ShowService {
-    ResponseEntity<Response> getShowsWithGenres();
+    ResponseEntity<Response> getShowsByGrade();
     ResponseEntity<Response> getShow(long showId);
     ResponseEntity<Response> addShow(ShowReq req);
     ResponseEntity<Response> deleteShow(long showId);

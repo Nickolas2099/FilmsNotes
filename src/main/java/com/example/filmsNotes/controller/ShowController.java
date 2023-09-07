@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping(value = "/films-notes/show")
 @RequiredArgsConstructor
-public class CommonController {
+public class ShowController {
 
     private final ShowService showService;
     @GetMapping("/getShows")
     public ResponseEntity<Response> getShows() {
         log.info("START endpoint getShows");
-        ResponseEntity<Response> resp = showService.getShowsWithGenres();
+        ResponseEntity<Response> resp = showService.getShowsByGrade();
         log.info("END endpoint getShows, resp: {}", resp);
         return resp;
     }

@@ -28,7 +28,7 @@ public class ShowServiceImpl implements ShowService {
 
 
     @Override
-    public ResponseEntity<Response> getShowsWithGenres() {
+    public ResponseEntity<Response> getShowsByGrade() {
 
         List<Show> shows = showRepository.findAllByOrderByGradeDesc();
         return new ResponseEntity<>(SuccessResponse.builder()

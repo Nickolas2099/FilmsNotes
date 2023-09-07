@@ -16,6 +16,14 @@ public class GenreController {
 
     private final GenreService genreService;
 
+    @GetMapping("/getGenres")
+    public ResponseEntity<Response> getGenres() {
+        log.info("START endpoint getGenres");
+        ResponseEntity<Response> resp = genreService.getGenres();
+        log.info("END endpoint getGenres, resp: {}", resp);
+        return resp;
+    }
+
     @PostMapping("/updateGenre")
     public ResponseEntity<Response> updateGenre(GenreReq req) {
         log.info("START endpoint updateGenre, req: {}", req);
