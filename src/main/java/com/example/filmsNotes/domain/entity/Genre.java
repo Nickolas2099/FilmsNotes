@@ -26,7 +26,7 @@ public class Genre {
     @NotBlank(message = "name не должен быть пустым")
     @Pattern(regexp = RegExp.genreName, message = "некорректный name")
     private String name;
-    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("genres")
     Set<Show> shows;
 

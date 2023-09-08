@@ -14,8 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -47,15 +46,18 @@ public class ShowServiceImpl implements ShowService {
     public ResponseEntity<Response> addShow(ShowReq req) {
         validation.requestValidation(req);
 
-        Iterator<Genre> iterator = req.getShow().getGenres().iterator();
-
-        while (iterator.hasNext()){
-            Genre genre = iterator.next();
-            if(genreRepository.isGenreExist(genre.getName()) == 1) {
-                iterator.remove();
+        Set<Genre> existingGenres = new HashSet<>();
+        for(Genre genre : req.getShow().getGenres()) {
+            Optional<Genre> optionalGenre = genreRepository.findIfExist(genre.getName());
+            if(optionalGenre.isPresent()) {
+                existingGenres.add(optionalGenre.get());
+            } else {
+                genreRepository.save(genre);
+                existingGenres.add(genre);
             }
         }
-        showRepository.saveAndFlush(req.getShow());
+        req.getShow().setGenres(existingGenres);
+        showRepository.save(req.getShow());
         return new ResponseEntity<>(SuccessResponse.builder().build(), HttpStatus.OK);
     }
 
